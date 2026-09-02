@@ -20,7 +20,9 @@ CREATE TABLE dividend_announcements (
 
 CREATE TABLE companies (
     CompanyID int PRIMARY KEY,
-    CompanyName varchar(255)
+    CompanyName varchar(255),
+    Isin varchar(12),
+    Ticker varchar(8)
 );
 
 CREATE TABLE isin_company_map (
