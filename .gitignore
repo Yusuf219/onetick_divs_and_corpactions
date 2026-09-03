@@ -4,7 +4,6 @@ __pycache__/
 *.pyc
 *$py.class
 
-
 notes/
 *.csv
 
