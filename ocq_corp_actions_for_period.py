@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 import onetick.py as otp
 import pandas as pd
-from datetime import date, timedelta
+from datetime import date, timedelta # Unused for now, may use it later
 
 load_dotenv()
 
@@ -17,7 +17,7 @@ result = otp.run(data,
                  start=otp.dt(2024,2, 1,0,0),
                  end=otp.dt(2024, 2, 2,0,0),
                  timezone='UTC',
-                 symbols=['PAY_DATE'], # Or ANN_DATE, EX_DATE or REC_DATE
+                 symbols=['EX_DATE'], # As well as ANN_DATE, EX_DATE or REC_DATE
                  )
 print(result)
 
