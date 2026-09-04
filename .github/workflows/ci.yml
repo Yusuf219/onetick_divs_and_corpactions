@@ -1,0 +1,25 @@
+name: ci
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  verify-aws-auth:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assume AWS role via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: eu-west-2
+          role-session-name: corpactions-ci-${{ github.run_id }}
+
+      - name: Confirm which identity we are using (hopefully OIDC)
+        run: aws sts get-caller-identity
+
+      - name: Confirm we can see the corpactions bucket from AWS
+        run: aws s3 ls "s3://${{ vars.CORPACTIONS_BUCKET }}/"
