@@ -11,6 +11,14 @@ jobs:
   verify-aws-auth:
     runs-on: ubuntu-latest
     steps:
+      - name: Show OIDC claims (diagnostic, remove once working)
+        run: |
+          curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com" \
+            | jq -r '.value' \
+            | cut -d '.' -f2 \
+            | python3 -c "import base64,json,sys; t=sys.stdin.read().strip(); t+='='*(-len(t)%4); c=json.loads(base64.urlsafe_b64decode(t)); print(json.dumps({k:c.get(k) for k in ['sub','aud','iss','repository','ref','workflow_ref']}, indent=2))"
+
       - name: Assume AWS role via OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
